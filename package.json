@@ -1,0 +1,13 @@
+{
+  "name": "second-brain",
+  "private": true,
+  "workspaces": ["apps/*", "services/*"],
+  "scripts": {
+    "dev:web": "npm -w apps/web run dev",
+    "dev:embeddings": "npm -w services/embeddings run dev",
+    "build:web": "npm -w apps/web run build",
+    "supabase:start": "npx supabase start",
+    "supabase:stop": "npx supabase stop",
+    "supabase:reset": "npx supabase db reset"
+  }
+}

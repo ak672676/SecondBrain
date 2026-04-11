@@ -1,0 +1,48 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Bash(npm run *)",
+      "Bash(npx *)",
+      "Bash(git status)",
+      "Bash(git add *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(supabase *)",
+      "Bash(node *)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Bash(cat *)"
+    ],
+    "deny": [
+      "Bash(git push --force *)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file_path=$(echo '$TOOL_INPUT' | jq -r '.file_path // .file_path // empty'); if [[ \"$file_path\" =~ \\.(ts|tsx|js|jsx)$ ]] && command -v npx &>/dev/null; then npx prettier --write \"$file_path\" 2>/dev/null || true; fi"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude needs your attention\" with title \"Second Brain\"'"
+          }
+        ]
+      }
+    ]
+  }
+}
